@@ -1,0 +1,115 @@
+<style>
+  [aria-labelledby='shopify-pc__banner__body-title'] {
+    display: none;
+  }
+</style>
+
+{% assign diego = 'didi' %}
+{% capture adrian %}
+      <ul>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+      </ul>
+{% endcapture %}
+
+<p style="text-align:center">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, perferendis? {{ diego }}
+</p>
+
+{% assign frutas = 'manzana, banana, pera' | split: ', ' %}
+{{ frutas[0] }}
+{{ product.title }}
+
+{% # content %}
+{% assign age = 20 %}
+{% assign sex = 'true' %}
+{% assign color = 'black' %}
+
+{% if age > 18 and sex %}
+  <p>SI puedes entrar</p>
+{% elsif age == 15 %}
+  <p>tienes 15</p>
+{% else %}
+  <p>NO puedes entrar</p>
+{% endif %}
+
+{% case color %}
+  {% when 'red' %}
+    eres rojo
+  {% when 'blue' %}
+    eres azul
+  {% else %}
+    no se tu color
+{% endcase %}
+
+{%- liquid
+  if color == 'black'
+    assign testblack = 'hay un color oscuro'
+  endif
+-%}
+{{ testblack }}
+
+<br>
+{{ product.type }}
+<br>
+
+{%- for collection in collections reversed -%}
+  {%- if collection.title == 'Home page' -%}
+    {%- continue -%}
+  {%- endif -%}
+  {{ forloop.index }}
+  {{ collection.title | upcase }}
+  <br>
+{%- else -%}
+  no hay colecciones
+{%- endfor -%}
+
+{%- assign car = '' -%}
+{%- assign price = 877 %}
+
+{%- if car == blank -%}
+  {{ 'no tienes coche' | append: ' *** ahora ***' | upcase }}
+  {{ price | money }}
+{%- endif -%}
+
+<img class="ii" src="{{ 'amiles.jpg' | asset_url}}" alt="">
+<img class="ii" src="{{ 'amiles.jpg' | asset_img_url: 'compact'}}" alt="">
+<img class="ii" src="{{ 'gift_card.png' | file_img_url: 'medium'}}" alt="">
+
+{{ 'acss-test.css' | asset_url | stylesheet_tag }}
+{{ 'ajs-test.js' | asset_url | script_tag }}
+
+{%- render 'a-test' -%}
+
+{% for collection in collections %}
+  <div style="border: solid 1px #555; margin: 0 0 1rem">
+    {{- collection.title -}}
+    {%- if collection.description -%}
+      {{- collection.description | strip_html -}}
+    {%- else -%}
+      <b>no tiene descripcion</b>
+    {%- endif -%}
+
+    {%- for product in collection.products -%}
+      <h2>{{- product.title -}}</h2>
+      <p>{{- product.price | money -}}</p>
+      {%- if product.featured_image -%}
+         <img class="ii" src="{{ product | img_url: 'original'}}" alt="">
+        <img class="ii" src="{{ product.images[1] | img_url:"medium"}}" alt="">
+      {%- endif -%}
+    
+      {%- if product.tags -%}
+        <ul>
+         {%- for tag in product.tags -%}          
+          <li>{{ tag }}</li>          
+         {%- endfor -%}
+         </ul>
+      {%- endif -%}     
+
+    {%- else -%}
+      no hay productos en esta coleccion
+    {%- endfor -%}
+  </div>
+
+{% endfor %}

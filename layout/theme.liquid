@@ -41,6 +41,8 @@
 
     {{ content_for_header }}
 
+   
+
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
@@ -308,6 +310,8 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+    
+    {% section 'arb_testing' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
